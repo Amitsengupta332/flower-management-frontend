@@ -43,29 +43,29 @@ const AllFlower = () => {
 
   const [deleteFlower] = useDeleteFlowerMutation();
 
-  // const tableData = AllProducts?.data?.map(
-  //   ({
-  //     _id,
-  //     productName,
-  //     productQuantity,
-  //     price,
-  //     bloomDate,
-  //     color,
-  //     selectCategory,
-  //     size,
-  //     fragrance,
-  //   }) => ({
-  //     key: _id,
-  //     productName,
-  //     productQuantity,
-  //     price,
-  //     bloomDate,
-  //     color,
-  //     selectCategory,
-  //     size,
-  //     fragrance,
-  //   })
-  // );
+  const tableData = AllProducts?.data?.map(
+    ({
+      _id,
+      productName,
+      productQuantity,
+      price,
+      bloomDate,
+      color,
+      selectCategory,
+      size,
+      fragrance,
+    }) => ({
+      key: _id,
+      productName,
+      productQuantity,
+      price,
+      bloomDate,
+      color,
+      selectCategory,
+      size,
+      fragrance,
+    })
+  );
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
@@ -280,8 +280,8 @@ const AllFlower = () => {
   return (
     <Table
       columns={columns}
-      dataSource={AllProducts?.data}
-      // dataSource={tableData}
+      // dataSource={AllProducts?.data}
+      dataSource={tableData}
       onChange={onChange}
       rowSelection={rowSelection}
     />

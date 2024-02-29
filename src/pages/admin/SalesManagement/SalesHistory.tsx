@@ -50,7 +50,7 @@ const SalesHistory = () => {
           justifyContent: "center",
         }}
       >
-        Smartphones Sales History
+        Flower Sales History
       </p>
       <Divider style={{ backgroundColor: "red" }} />
 

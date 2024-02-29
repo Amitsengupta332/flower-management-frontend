@@ -23,3 +23,17 @@ export type FlowerDefaultValuesProps = {
   size?: string;
   fragrance?: string;
 };
+
+export type TFlowers = {
+  _id: string;
+  productName: string;
+  productQuantity: string;
+  price: string;
+  bloomDate: string;
+  color: string;
+  selectCategory: string;
+  size: string;
+  fragrance: string;
+  createdAt: string;
+  updatedAt: string;
+};

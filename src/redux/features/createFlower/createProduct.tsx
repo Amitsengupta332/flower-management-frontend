@@ -1,7 +1,35 @@
+import { TFlowers } from "../../../types/flower.types";
+import { TQueryParam, TResponseRedux } from "../../../types/global";
 import { baseApi } from "../../api/baseApi";
 
 const createProduct = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllProducts: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+
+        return {
+          url: "/all-flowers",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (response: TResponseRedux<TFlowers[]>) => {
+        // console.log("inside redux", response);
+        return {
+          // : TResponseRedux<TFlower[]>
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+      providesTags: ["flower"],
+    }),
     product: builder.mutation({
       query: (productInfo) => ({
         url: "/create-flower",
@@ -9,13 +37,6 @@ const createProduct = baseApi.injectEndpoints({
         body: productInfo,
       }),
       invalidatesTags: ["flower"],
-    }),
-    getAllProducts: builder.query({
-      query: () => ({
-        url: "/all-flowers",
-        method: "GET",
-      }),
-      providesTags: ["flower"],
     }),
     getSingleFlower: builder.query({
       query: (id) => ({
@@ -49,3 +70,63 @@ export const {
   useUpdateFlowerMutation,
   useGetSingleFlowerQuery,
 } = createProduct;
+
+//    getAllProducts: builder.query({
+//   query: () => ({
+//     url: "/all-flowers",
+//     method: "GET",
+//   }),
+//   providesTags: ["flower"],
+// }),
+
+//
+// getAllProducts: builder.query({
+//   query: (args) => {
+//     const params = new URLSearchParams();
+
+//     if (args) {
+//       args.forEach((item: TQueryParam) => {
+//         params.append(item.name, item.value as string);
+//       });
+//     }
+
+//     return {
+//       url: "/academic-semesters",
+//       method: "GET",
+//       params: params,
+//     };
+//   },
+// transformResponse: (response: TResponseRedux<TFlower[]>) => {
+//   return {
+//     data: response.data,
+//     meta: response.meta,
+//   };
+// },
+// }),
+
+// getAllProducts: builder.query({
+//   query: (args) => {
+//     const params = new URLSearchParams();
+
+//     if (args) {
+//       args.forEach((item: TQueryParam) => {
+//         params.append(item.name, item.value as string);
+//       });
+//     }
+
+//     return {
+//       url: "/all-flowers",
+//       method: "GET",
+//       params: params,
+//     };
+//   },
+//   transformResponse: (response: TResponseRedux<TFlowers[]>) => {
+//     // console.log("inside redux", response);
+//     return {
+//       // : TResponseRedux<TFlower[]>
+//       data: response.data,
+//       meta: response.meta,
+//     };
+//   },
+//   providesTags: ["flower"],
+// }),
