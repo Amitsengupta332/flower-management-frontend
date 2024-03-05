@@ -4,8 +4,8 @@ Welcome to the Flower Management Dashboard project! This comprehensive dashboard
 
 # Live Link :
 
-- Client Side: https://flower-management-clients.vercel.app/
-- Server Side: https://flower-management-server-xi.vercel.app/
+- Client Side: https://assignment-6-omega-one.vercel.app/
+- Server Side: https://assignment-6-server-kappa.vercel.app/
 
 ## Introduction
 

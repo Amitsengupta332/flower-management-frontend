@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Modal, Table } from "antd";
 import type { TableColumnsType } from "antd";
 import { useGetAllProductsQuery } from "../../../redux/features/createFlower/createProduct";

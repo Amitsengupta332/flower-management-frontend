@@ -10,8 +10,11 @@ import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
 // import { toast } from "sonner";
 //https://flower-management-server-xi.vercel.app/api/v1
+
+//http://localhost:5000/api/v1
+//https://assignment-6-server-kappa.vercel.app/api/v1/auth/refresh-token
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api/v1",
+  baseUrl: "https://assignment-6-server-kappa.vercel.app/api/v1",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -35,10 +38,13 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     //* Send Refresh
     console.log("Sending refresh token");
 
-    const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
-      method: "POST",
-      credentials: "include",
-    });
+    const res = await fetch(
+      "https://assignment-6-server-kappa.vercel.app/api/v1/auth/refresh-token",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
 
     const data = await res.json();
 
