@@ -58,7 +58,19 @@ const CreateFlower = () => {
             <FMInput type="date" name="bloomDate" label="Bloom Date" />
           </Col>
           <Col>
-            <FMInput type="text" name="color" label="Color" />
+            {/* <FMInput type="text" name="color" label="Color" /> */}
+            <SelectInput
+              type="select"
+              name="color"
+              label="Color"
+              options={[
+                { label: "Red", value: "Red" },
+                { label: "Orange", value: "Orange" },
+                { label: "Yellow", value: "Yellow" },
+                { label: "Green", value: "Green" },
+                { label: "Blue", value: "Orchids" },
+              ]}
+            />
           </Col>
           <Col>
             {/* <FMInput

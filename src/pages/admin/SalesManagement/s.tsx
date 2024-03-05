@@ -8,29 +8,18 @@ import FMInput from "../../../components/form/FMInput";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { useCreateSalesMutation } from "../../../redux/features/sales/salesApi";
-import { TFlowers } from "../../../types/flower.types";
 
-// interface DataType {
-//   key: React.Key;
-//   productName: string;
-//   productQuantity: string;
-//   price: string;
-//   bloomDate: string;
-//   color: string;
-//   selectCategory: string;
-//   size: string;
-//   fragrance: string;
-// }
-export type TTableData = Pick<
-  TFlowers,
-  | "productName"
-  | "productQuantity"
-  | "price"
-  | "bloomDate"
-  | "color"
-  | "selectCategory"
-  | "fragrance"
->;
+interface DataType {
+  key: React.Key;
+  productName: string;
+  productQuantity: string;
+  price: string;
+  bloomDate: string;
+  color: string;
+  selectCategory: string;
+  size: string;
+  fragrance: string;
+}
 const SalesDetails = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,15 +71,10 @@ const SalesDetails = () => {
     }
     setIsModalOpen(false);
   };
-  const {
-    data: AllProducts,
-    // isLoading,
-    // error,
-  } = useGetAllProductsQuery(undefined);
-  console.log(error);
-  // const { data: AllProducts, isLoading } = useGetAllProductsQuery({});
-  // console.log(AllProducts?.data, isLoading);
-  const columns: TableColumnsType<TTableData> = [
+
+  const { data: AllProducts, isLoading } = useGetAllProductsQuery({});
+  console.log(AllProducts?.data, isLoading);
+  const columns: TableColumnsType<DataType> = [
     {
       title: "Name",
       dataIndex: "productName",

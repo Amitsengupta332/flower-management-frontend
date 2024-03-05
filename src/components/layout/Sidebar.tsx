@@ -1,19 +1,35 @@
 import { Layout, Menu } from "antd";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { adminPaths } from "../../routes/flower.routes";
+import { sellerPaths } from "../../routes/seller.routes";
+import { verifyToken } from "../../utils/verifyToken";
+import { useAppSelector } from "../../redux/hooks";
+import { TUser, useCurrentToken } from "../../redux/features/auth/authSlice";
 const { Sider } = Layout;
 
 const userRole = {
-  ADMIN: "admin",
+  ADMIN: "manager",
+  SELLER: "seller",
 };
 
 const Sidebar = () => {
-  const role = "admin";
+  const token = useAppSelector(useCurrentToken);
+
+  let user;
+
+  if (token) {
+    user = verifyToken(token);
+  }
+
+  const role = (user as TUser)?.role;
   let sidebarItems;
 
   switch (role) {
     case userRole.ADMIN:
       sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
+      break;
+    case userRole.SELLER:
+      sidebarItems = sidebarItemsGenerator(sellerPaths, userRole.SELLER);
       break;
 
     default:

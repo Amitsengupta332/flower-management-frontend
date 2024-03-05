@@ -113,11 +113,23 @@ const Varient = () => {
             />
           </Col>
           <Col>
-            <FMInput
+            {/* <FMInput
               type="text"
               name="color"
               label="Color"
               // defaultValue={flower.color}
+            /> */}
+            <SelectInput
+              type="select"
+              name="color"
+              label="Color"
+              options={[
+                { label: "Red", value: "Red" },
+                { label: "Orange", value: "Orange" },
+                { label: "Yellow", value: "Yellow" },
+                { label: "Green", value: "Green" },
+                { label: "Blue", value: "Orchids" },
+              ]}
             />
           </Col>
           <Col>

@@ -1,4 +1,4 @@
-import { Button, Table, TableColumnsType, TableProps } from "antd";
+import { Button, Skeleton, Table, TableColumnsType, TableProps } from "antd";
 import {
   useDeleteFlowerMutation,
   useGetAllProductsQuery,
@@ -35,11 +35,20 @@ export type TTableData = Pick<
   | "fragrance"
 >;
 
-const AllFlower = () => {
+type TAllFlowerProps = {
+  subRoute?: string;
+};
+
+const AllFlower = ({ subRoute }: TAllFlowerProps) => {
+  console.log(subRoute);
   const navigate = useNavigate();
   const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
-  const { data: AllProducts } = useGetAllProductsQuery(params);
-  console.log(AllProducts);
+  const {
+    data: AllProducts,
+    isLoading,
+    error,
+  } = useGetAllProductsQuery(params);
+  console.log(error);
 
   const [deleteFlower] = useDeleteFlowerMutation();
 
@@ -84,30 +93,6 @@ const AllFlower = () => {
       title: "Name",
       key: "productName",
       dataIndex: "productName",
-      filters: [
-        {
-          text: "Joe",
-          value: "Joe",
-        },
-        {
-          text: "Jim",
-          value: "Jim",
-        },
-        {
-          text: "Submenu",
-          value: "Submenu",
-          children: [
-            {
-              text: "Green",
-              value: "Green",
-            },
-            {
-              text: "Black",
-              value: "Black",
-            },
-          ],
-        },
-      ],
     },
     // {
     //   title: "Age",
@@ -134,6 +119,28 @@ const AllFlower = () => {
       title: "Color",
       key: "color",
       dataIndex: "color",
+      filters: [
+        {
+          text: "Red",
+          value: "Red",
+        },
+        {
+          text: "Orange",
+          value: "Orange",
+        },
+        {
+          text: "Yellow",
+          value: "Yellow",
+        },
+        {
+          text: "Green",
+          value: "Green",
+        },
+        {
+          text: "Blue",
+          value: "Blue",
+        },
+      ],
     },
     {
       title: "Category",
@@ -141,26 +148,24 @@ const AllFlower = () => {
       dataIndex: "selectCategory",
       filters: [
         {
-          text: "Joe",
-          value: "Joe",
+          text: "Roses",
+          value: "Roses",
         },
         {
-          text: "Jim",
-          value: "Jim",
+          text: "Lilies",
+          value: "Lilies",
         },
         {
-          text: "Submenu",
-          value: "Submenu",
-          children: [
-            {
-              text: "Green",
-              value: "Green",
-            },
-            {
-              text: "Black",
-              value: "Black",
-            },
-          ],
+          text: "Sunflowers",
+          value: "Sunflowers",
+        },
+        {
+          text: "Tulips",
+          value: "Tulips",
+        },
+        {
+          text: "Orchids",
+          value: "Orchids",
         },
       ],
     },
@@ -187,6 +192,28 @@ const AllFlower = () => {
       title: "Fragrance",
       key: "fragrance",
       dataIndex: "fragrance",
+      filters: [
+        {
+          text: "Rose",
+          value: "Rose",
+        },
+        {
+          text: "Lily",
+          value: "Lily",
+        },
+        {
+          text: "Jasmine",
+          value: "Jasmine",
+        },
+        {
+          text: "Lavender",
+          value: "Lavender",
+        },
+        {
+          text: "Citrus",
+          value: "Citrus",
+        },
+      ],
     },
     {
       title: "Action",
@@ -237,12 +264,12 @@ const AllFlower = () => {
   ];
 
   const handleCreateVarient = (record: any) => {
-    navigate(`/admin/create-variant/${record._id}`);
+    navigate(`/${subRoute}/create-variant/${record._id}`);
     // <Link to={`/create-variant/${record._id}`}></Link>;
   };
 
   const handleUpdate = (record: any) => {
-    navigate(`/admin/update-flower/${record._id}`);
+    navigate(`/${subRoute}/update-flower/${record._id}`);
   };
 
   const handleDelete = async (record: any) => {
@@ -267,6 +294,15 @@ const AllFlower = () => {
       filters.size?.forEach((item) =>
         queryParams.push({ name: "size", value: item })
       );
+      filters.selectCategory?.forEach((item) =>
+        queryParams.push({ name: "selectCategory", value: item })
+      );
+      filters.fragrance?.forEach((item) =>
+        queryParams.push({ name: "fragrance", value: item })
+      );
+      filters.color?.forEach((item) =>
+        queryParams.push({ name: "color", value: item })
+      );
 
       // filters.year?.forEach((item) =>
       //   queryParams.push({ name: "year", value: item })
@@ -277,6 +313,14 @@ const AllFlower = () => {
     console.log("params", pagination, filters, sorter, extra);
     // console.log(filters);
   };
+
+  if (isLoading) {
+    return (
+      <div>
+        <Skeleton active />
+      </div>
+    );
+  }
   return (
     <Table
       columns={columns}

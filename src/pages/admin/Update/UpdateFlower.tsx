@@ -116,11 +116,18 @@ const UpdateFlower = () => {
             />
           </Col>
           <Col>
-            <FMInput
-              type="text"
+            <SelectInput
+              type="select"
               name="color"
               label="Color"
               defaultValue={flower?.color}
+              options={[
+                { label: "Red", value: "Red" },
+                { label: "Orange", value: "Orange" },
+                { label: "Yellow", value: "Yellow" },
+                { label: "Green", value: "Green" },
+                { label: "Blue", value: "Orchids" },
+              ]}
             />
           </Col>
           <Col>
