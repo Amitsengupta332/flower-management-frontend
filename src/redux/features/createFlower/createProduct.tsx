@@ -13,7 +13,6 @@ const createProduct = baseApi.injectEndpoints({
             params.append(item.name, item.value as string);
           });
         }
-
         return {
           url: "/all-flowers",
           method: "GET",
@@ -52,7 +51,14 @@ const createProduct = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["flower"],
     }),
-
+    deleteBulkFlower: builder.mutation({
+      query: (flowerIdArray: React.Key[]) => ({
+        url: "/",
+        method: "DELETE",
+        body: { flowerIdArray },
+      }),
+      invalidatesTags: ["flower"],
+    }),
     deleteFlower: builder.mutation({
       query: (flowerId: string) => ({
         url: `/delete-flower/${flowerId}`,
@@ -69,6 +75,7 @@ export const {
   useDeleteFlowerMutation,
   useUpdateFlowerMutation,
   useGetSingleFlowerQuery,
+  useDeleteBulkFlowerMutation,
 } = createProduct;
 
 //    getAllProducts: builder.query({

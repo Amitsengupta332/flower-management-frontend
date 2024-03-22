@@ -13,6 +13,7 @@ const FMInput = ({ type, name, label, defaultValue }: TInputProps) => {
     <div style={{ marginBottom: "20px" }}>
       <Controller
         name={name}
+        defaultValue={defaultValue}
         render={({ field }) => (
           <Form.Item label={label}>
             <Input
@@ -20,7 +21,6 @@ const FMInput = ({ type, name, label, defaultValue }: TInputProps) => {
               className="select-w"
               type={type}
               id={name}
-              defaultValue={defaultValue}
               style={{ width: "338px" }}
             />
           </Form.Item>

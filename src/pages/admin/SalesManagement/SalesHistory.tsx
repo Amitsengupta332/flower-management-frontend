@@ -9,7 +9,8 @@ interface DataType {
 }
 
 const SalesHistory = () => {
-  const { data, isLoading } = useGetAllSalesQuery(undefined);
+  const { data, isLoading } = useGetAllSalesQuery({});
+  console.log(data);
 
   const columns: TableColumnsType<DataType> = [
     {
@@ -19,8 +20,24 @@ const SalesHistory = () => {
       // render: (text: string) => <a>{text}</a>,
     },
     {
+      title: "Price",
+      dataIndex: "price",
+      width: 100,
+      // render: (text: string) => <a>{text}</a>,
+    },
+    {
       title: "Quantity",
       dataIndex: "quantity",
+      width: 100,
+    },
+    {
+      title: "Discounted Price",
+      dataIndex: "disCountPrice",
+      width: 100,
+    },
+    {
+      title: "Final Price",
+      dataIndex: "finalPrice",
       width: 100,
     },
     {

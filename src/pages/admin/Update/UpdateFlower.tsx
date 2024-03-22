@@ -11,11 +11,11 @@ import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const UpdateFlower = () => {
-  const id = useParams().id;
+  const { id } = useParams();
   // console.log(id.id);
   const { data, isLoading } = useGetSingleFlowerQuery(id);
-  const [productUpdate] = useUpdateFlowerMutation();
-  console.log(data);
+  const [productUpdate, { error }] = useUpdateFlowerMutation();
+  console.log(error);
 
   if (isLoading) {
     return (
@@ -26,16 +26,17 @@ const UpdateFlower = () => {
   }
 
   const flower = data?.data;
-  const defaultValue = {
-    productName: flower?.productName,
-    productQuantity: flower?.productQuantity,
-    price: flower?.price,
-    bloomDate: flower?.bloomDate,
-    color: flower?.color,
-    selectCategory: flower?.selectCategory,
-    size: flower?.size,
-    fragrance: flower?.fragrance,
-  };
+
+  // const defaultValue = {
+  //   productName: flower?.productName,
+  //   productQuantity: flower?.productQuantity,
+  //   price: flower?.price,
+  //   bloomDate: flower?.bloomDate,
+  //   color: flower?.color,
+  //   selectCategory: flower?.selectCategory,
+  //   size: flower?.size,
+  //   fragrance: flower?.fragrance,
+  // };
   // console.log(flower);
   // console.log(id);
   const handleUpdateFlower = async (data: FieldValues) => {
@@ -52,9 +53,9 @@ const UpdateFlower = () => {
       }
 
       const updatedFlowerInfo = {
-        productName: data.productName ? data.productName : data.productName,
+        productName: data.productName,
         productQuantity: data.productQuantity,
-        price: data.price ? data.price : data.price,
+        price: data.price,
         bloomDate: data.bloomDate,
         color: data.color,
         selectCategory: data.selectCategory,
@@ -76,14 +77,15 @@ const UpdateFlower = () => {
     }
   };
   return (
+    //defaultValues={defaultValue}
     <div>
       <h1 className="text-center my-4">Update Flower</h1>
       <Divider />
-      <FMForm onSubmit={handleUpdateFlower} defaultValues={defaultValue}>
+      <FMForm onSubmit={handleUpdateFlower}>
         <Row justify="space-between" align="top">
           <Col>
             <FMInput
-              // defaultValue={flower?.productName}
+              defaultValue={flower?.productName}
               type="text"
               name="productName"
               label="Product Name"
@@ -94,7 +96,7 @@ const UpdateFlower = () => {
               type="text"
               name="productQuantity"
               label="Product Quantity"
-              // defaultValue={flower?.productQuantity}
+              defaultValue={flower?.productQuantity}
             />
           </Col>
           <Col>
@@ -135,7 +137,7 @@ const UpdateFlower = () => {
               type="select"
               name="selectCategory"
               label="Select Category"
-              // defaultValue={flower?.selectCategory}
+              defaultValue={flower?.selectCategory}
               options={[
                 { label: "Roses", value: "Roses" },
                 { label: "Lilies", value: "Lilies" },
@@ -152,7 +154,7 @@ const UpdateFlower = () => {
               type="select"
               name="size"
               label="Size"
-              // defaultValue={flower?.size}
+              defaultValue={flower?.size}
               options={[
                 { label: "S", value: "s" },
                 { label: "M", value: "m" },
@@ -165,7 +167,7 @@ const UpdateFlower = () => {
               type="select"
               name="fragrance"
               label="Fragrance"
-              // defaultValue={flower?.fragrance}
+              defaultValue={flower?.fragrance}
               options={[
                 { label: "Rose", value: "Rose" },
                 { label: "Lily", value: "Lily" },

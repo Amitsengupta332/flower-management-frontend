@@ -34,6 +34,6 @@ export type TFlowers = {
   selectCategory: string;
   size: string;
   fragrance: string;
-  createdAt: string;
-  updatedAt: string;
+  // createdAt: string;
+  // updatedAt: string;
 };

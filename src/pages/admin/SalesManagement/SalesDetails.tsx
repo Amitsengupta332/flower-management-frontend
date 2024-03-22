@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-import { Button, Modal, Table } from "antd";
+import { Button, Col, Modal, Row, Table } from "antd";
 import type { TableColumnsType } from "antd";
 import { useGetAllProductsQuery } from "../../../redux/features/createFlower/createProduct";
 import FMForm from "../../../components/form/FMForm";
@@ -69,6 +69,7 @@ const SalesDetails = () => {
         quantity: parseInt(data.quantity, 10),
         buyerName: data.buyerName,
         salesDate: data.salesDate,
+        coupon: data.promoCode || null,
       };
       const res = await sales(salesInfo).unwrap();
       toast.success("Sales Created Successfully", {
@@ -149,6 +150,7 @@ const SalesDetails = () => {
     <div>
       <Table columns={columns} dataSource={AllProducts?.data} />;
       <Modal
+        className="text-center"
         title="Sales Flowers"
         open={isModalOpen} // Change 'open' to 'visible'
         onOk={handleOk}
@@ -156,6 +158,11 @@ const SalesDetails = () => {
       >
         {selectedProduct && (
           <FMForm onSubmit={handleSales}>
+            <Row>
+              <Col span={24}>
+                <FMInput type="text" name="promoCode" label={"Promo Code"} />
+              </Col>
+            </Row>
             <FMInput
               type="text"
               name="buyerName"

@@ -1,5 +1,6 @@
 import { Button, Skeleton, Table, TableColumnsType, TableProps } from "antd";
 import {
+  useDeleteBulkFlowerMutation,
   useDeleteFlowerMutation,
   useGetAllProductsQuery,
 } from "../../../redux/features/createFlower/createProduct";
@@ -24,8 +25,10 @@ import { TableRowSelection } from "antd/es/table/interface";
 //   size: string;
 //   fragrance: string;
 // }
+
 export type TTableData = Pick<
   TFlowers,
+  | "_id"
   | "productName"
   | "productQuantity"
   | "price"
@@ -48,33 +51,37 @@ const AllFlower = ({ subRoute }: TAllFlowerProps) => {
     isLoading,
     error,
   } = useGetAllProductsQuery(params);
+
+  const [deleteBulkFlower] = useDeleteBulkFlowerMutation();
   console.log(error);
 
   const [deleteFlower] = useDeleteFlowerMutation();
-
-  // const tableData = AllProducts?.data?.map(
-  //   ({
-  //     _id,
-  //     productName,
-  //     productQuantity,
-  //     price,
-  //     bloomDate,
-  //     color,
-  //     selectCategory,
-  //     size,
-  //     fragrance,
-  //   }) => ({
-  //     key: _id,
-  //     productName,
-  //     productQuantity,
-  //     price,
-  //     bloomDate,
-  //     color,
-  //     selectCategory,
-  //     size,
-  //     fragrance,
-  //   })
-  // );
+  let tableData: TTableData[] = [];
+  tableData =
+    AllProducts?.data?.map(
+      ({
+        _id,
+        productName,
+        productQuantity,
+        price,
+        bloomDate,
+        color,
+        selectCategory,
+        size,
+        fragrance,
+      }) => ({
+        _id,
+        key: _id,
+        productName,
+        productQuantity,
+        price,
+        bloomDate,
+        color,
+        selectCategory,
+        size,
+        fragrance,
+      })
+    ) || [];
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
@@ -94,12 +101,7 @@ const AllFlower = ({ subRoute }: TAllFlowerProps) => {
       key: "productName",
       dataIndex: "productName",
     },
-    // {
-    //   title: "Age",
-    //   dataIndex: "age",
-    //   defaultSortOrder: "descend",
-    //   sorter: (a, b) => a.age - b.age,
-    // },
+
     {
       title: "Quantity",
       key: "productQuantity",
@@ -314,6 +316,21 @@ const AllFlower = ({ subRoute }: TAllFlowerProps) => {
     // console.log(filters);
   };
 
+  const handleBulkDelete = async () => {
+    const toastId = toast.loading("Deleting phone data ... ");
+    try {
+      const res = await deleteBulkFlower(selectedRowKeys);
+      console.log(res);
+      toast.success("Product Deleted Successfully", {
+        id: toastId,
+        duration: 2000,
+      });
+      setSelectedRowKeys([]);
+    } catch (error) {
+      toast.error("Something went wrong", { id: toastId, duration: 2000 });
+    }
+  };
+
   if (isLoading) {
     return (
       <div>
@@ -322,13 +339,20 @@ const AllFlower = ({ subRoute }: TAllFlowerProps) => {
     );
   }
   return (
-    <Table
-      columns={columns}
-      dataSource={AllProducts?.data}
-      // dataSource={tableData}
-      onChange={onChange}
-      rowSelection={rowSelection}
-    />
+    <>
+      <div>
+        <Button type="primary" danger onClick={handleBulkDelete}>
+          Delete
+        </Button>
+      </div>
+      <Table
+        columns={columns}
+        // dataSource={AllProducts?.data}
+        dataSource={tableData}
+        onChange={onChange}
+        rowSelection={rowSelection}
+      />
+    </>
   );
 };
 

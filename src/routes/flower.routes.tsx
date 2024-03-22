@@ -1,3 +1,4 @@
+import Coupon from "../pages/admin/Coupon/Coupon";
 import FlowerDashboard from "../pages/admin/FlowerDashboard";
 import AllFlower from "../pages/admin/FlowerManagement/AllFlower";
 import CreateFlower from "../pages/admin/FlowerManagement/CreateFlower";
@@ -28,6 +29,12 @@ export const adminPaths = [
         element: <AllFlower subRoute="manager" />,
       },
     ],
+  },
+
+  {
+    name: "Create Coupon",
+    path: "createCoupon",
+    element: <Coupon />,
   },
   // {
   //   name: "Sales Management",

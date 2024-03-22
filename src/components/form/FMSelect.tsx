@@ -16,6 +16,7 @@ const SelectInput = ({ name, label, options, defaultValue }: TInputProps) => {
       <br />
       <Controller
         name={name}
+        defaultValue={defaultValue}
         render={({ field }) => (
           <Select
             style={{ width: "338px" }}
@@ -24,11 +25,7 @@ const SelectInput = ({ name, label, options, defaultValue }: TInputProps) => {
             id={name}
           >
             {options.map((option) => (
-              <Select.Option
-                key={option.value}
-                defaultValue={defaultValue}
-                value={option.value}
-              >
+              <Select.Option key={option.value} value={option.value}>
                 {option.label}
               </Select.Option>
             ))}
